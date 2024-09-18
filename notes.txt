@@ -1,9 +1,0 @@
-no penalidad hasta el domingo
-hasta martes con penalidad
-
-un hilo le pregunta al user un numero,
-oro hilo, calcula
-
-el hilo principal no termina mientras el otro ejecuta
-
-**solo trabajar lo que no es mutex

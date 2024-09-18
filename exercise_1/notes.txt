@@ -1,0 +1,19 @@
+no penalidad hasta el domingo
+hasta martes con penalidad
+
+un hilo le pregunta al user un numero,
+oro hilo, calcula
+
+el hilo principal no termina mientras el otro ejecuta
+
+**solo trabajar lo que no es mutex
+
+se crean las funcines que quieres usar y se las pasas a threads con su argumento
+
+se queda pidiendo numeros por siempre
+    solo cuando es entre 0 y 1 que el segundo lo calcula
+    solo cuando es >100 que el thread termina
+
+variables se declaran global para que ambos proces
+
+****crea el thread que calcula, no el que pide el input
