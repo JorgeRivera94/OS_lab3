@@ -5,16 +5,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <unistd.h>
 
-void *Receive(void *input);
-void *Calculate(void *input);
-
+// to receive the user input
 void *Receive(void *input) {
   double *n = (double *)input;
-  // ask the user for a floating point number
-  printf("Enter a number between 0 and 1: ");
-  scanf("%lf", &*n);
-  printf("\n");
+  while (1) {  // para que siempre lo pida
+    // ask the user for a floating point number
+    pthread_mutex_lock(&mutex);  // enter and lock
+    printf("Enter a number between 0 and 1: ");
+    scanf("%lf", &*n);
+    printf("\n");
+    pthread_mutex_unlock(&mutex);  // leave and unlock
+  }
 
   if (*n > 100) {
     void *status;
