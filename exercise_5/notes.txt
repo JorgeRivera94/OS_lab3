@@ -1,0 +1,5 @@
+no penalidad hasta el domingo
+hasta martes con penalidad
+25pts
+
+Perform an upgraded version of the bouncing ball code so that each time I press the spacebar, a new ball appears at a random coordinate (within the coordinate limits) up to a maximum of 10 balls. Additionally, the direction of movement of the balls can be changed by pressing the letter 'c'. If ENTER is pressed, the program ends.

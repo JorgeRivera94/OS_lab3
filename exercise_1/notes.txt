@@ -1,5 +1,6 @@
 no penalidad hasta el domingo
 hasta martes con penalidad
+20pts
 
 un hilo le pregunta al user un numero,
 oro hilo, calcula

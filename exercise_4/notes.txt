@@ -1,0 +1,7 @@
+no penalidad hasta el domingo
+hasta martes con penalidad
+10pts
+
+* Modify the bouncing ball code using a thread to update the ball position every 100ms. Create a second thread that updates the counter value each 1 second.
+
+* Verify the ncurses library is installed before compiling the program. Run the following command: sudo apt-get install libncurses5-dev libncursesw5-dev
