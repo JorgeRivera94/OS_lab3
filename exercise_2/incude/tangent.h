@@ -5,4 +5,10 @@
  * TODO Go into details
  * @param arr Pointer to an int array of size 1,000,000
  */
-void FillArray(int* arr[1000000]);
+void FillArray(double arr[1000000]);
+
+/**
+ * @brief Array of type double with size of 1,000,000.
+ *
+ */
+extern double arr[1000000];
