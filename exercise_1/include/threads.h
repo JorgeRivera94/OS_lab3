@@ -24,7 +24,7 @@ void* Calculate(void* input);
 /**
  * @brief Global value to store the user provided number.
  */
-extern int input;
+extern double input;
 
 /**
  * @brief TODO Mutex to control access to input variable.

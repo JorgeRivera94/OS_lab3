@@ -2,6 +2,8 @@
     "C_Cpp.default.compilerPath": "C:\\msys64\\mingw32\\bin\\gcc.exe",
     "files.associations": {
         "pthread.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "stdio.h": "c",
+        "threads.h": "c"
     }
 }

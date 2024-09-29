@@ -6,12 +6,10 @@
 
 #include "threads.h"
 
-// global variables and functions from threads.h
-
-void* Receive(void* input);
-void* Calculate(void* input);
-// pthread_mutex_t mutex;
-int input;
+extern double input;
+extern pthread_mutex_t mutex;
+extern void* Receive(void* input);
+extern void* Calculate(void* input);
 
 int main() {
   // declare threads
@@ -19,19 +17,19 @@ int main() {
   pthread_t calculator;  // to calculate the arcsines
 
   // initialize mutex
-  pthread_mutex_init(&mutex, NULL);
+  if (pthread_mutex_init(&mutex, NULL) != EXIT_SUCCESS) {
+    perror("Failed to initialize mutex.");
+    exit(EXIT_FAILURE);
+  }
 
   // create the threads
   pthread_create(&receiver, NULL, Receive, (void*)&input);
+  pthread_create(&calculator, NULL, Calculate, (void*)&input);
 
-  // sync para que calculator no corra hasta tener input y
-  // receiver no corra hasta que calculator imprima
+  pthread_join(receiver, NULL);
+  pthread_join(calculator, NULL);
 
-  // pthread_create(&calculator, NULL, Calculate, (void*)&input);
+  pthread_mutex_destroy(&mutex);
 
-  // check if input is greater than 10 to terminate both threads and program
-  if (input > 100) {
-    printf("Terminating.\n");
-    exit(0);
-  }
+  return 0;
 }

@@ -9,6 +9,8 @@
 
 // global variables from threads.h
 pthread_mutex_t mutex;
+// test
+double input;
 
 // to receive the user input
 void *Receive(void *input) {
