@@ -4,6 +4,7 @@
         "pthread.h": "c",
         "types.h": "c",
         "stdio.h": "c",
-        "threads.h": "c"
+        "threads.h": "c",
+        "stdlib.h": "c"
     }
 }

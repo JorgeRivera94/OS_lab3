@@ -6,7 +6,7 @@
 
 #include "threads.h"
 
-extern double input;
+double input;
 extern pthread_mutex_t mutex;
 extern void* Receive(void* input);
 extern void* Calculate(void* input);

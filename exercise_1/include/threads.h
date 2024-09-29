@@ -32,4 +32,19 @@ extern double input;
  */
 extern pthread_mutex_t mutex;
 
+/**
+ * @brief Conditional variable for the thread receiving the input to wait until
+ * the calculator thread finishes calculating the arcsine and printng the value.
+ *
+ */
+extern pthread_cond_t cond_wait_receive;
+
+/**
+ * @brief Conditional variable for the thread calculating the arcsine to wait
+ * until the receiver thread receives a new value before starting the
+ * calculation and printing the result.
+ *
+ */
+extern pthread_cond_t cond_wait_calculate;
+
 #endif  // THREADS_H
