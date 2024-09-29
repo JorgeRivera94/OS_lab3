@@ -8,10 +8,11 @@ set(CMAKE_CXX_FLAGS_RELEASE "-o3 -DNDEBUG -s")
 project(threads)
 
 # Incloude the current directory for header files
-include_directories()
+include_directories(threads.h)
 
 # Add the executable
 add_executable(threads
+                src/threads.c
                 src/main.c)
 
 target_link_libraries(threads

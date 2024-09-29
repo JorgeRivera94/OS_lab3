@@ -1,3 +1,6 @@
+#ifndef THREADS_H
+#define THREADS_H
+
 #include <pthread.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -8,7 +11,7 @@
  * @param input
  * @return void*
  */
-extern void* Receive(void* input);
+void* Receive(void* input);
 
 /**
  * @brief TODO
@@ -16,7 +19,7 @@ extern void* Receive(void* input);
  * @param input
  * @return void*
  */
-extern void* Calculate(void* input);
+void* Calculate(void* input);
 
 /**
  * @brief Global value to store the user provided number.
@@ -28,3 +31,5 @@ extern int input;
  *
  */
 extern pthread_mutex_t mutex;
+
+#endif  // THREADS_H

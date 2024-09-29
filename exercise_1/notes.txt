@@ -9,7 +9,8 @@ el hilo principal no termina mientras el otro ejecuta
 
 **solo trabajar lo que no es mutex
 
-se crean las funcines que quieres usar y se las pasas a threads con su argumento
+se crean las funcines que quieres usar y se las pasas a threads con su 
+    argumento
 
 se queda pidiendo numeros por siempre
     solo cuando es entre 0 y 1 que el segundo lo calcula
