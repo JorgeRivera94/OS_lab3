@@ -1,4 +1,4 @@
-#include "threads.h"
+#include "tangents.h"
 
 #include <math.h>
 #include <pthread.h>
@@ -7,6 +7,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+void FillArray(double arr[1000000]) {
+  for (int i = 1; i < 1000001; i++) {
+    arr[i] = tan((double)i);
+  }
+}
 /**
  * @brief Global value to store the user provided number.
  */

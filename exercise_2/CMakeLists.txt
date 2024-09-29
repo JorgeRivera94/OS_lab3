@@ -5,15 +5,15 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -o0 - DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-o3 -DNDEBUG -s")
 
 # Set the project name
-project(threads)
+project(tangents)
 
 # Include the current directory for header files
 include_directories(include)
 
 # Add the executable
-add_executable(threads
-                src/threads.c
+add_executable(tangents
+                src/tangents.c
                 src/main.c)
 
-target_link_libraries(threads
+target_link_libraries(tangents
                         m)
