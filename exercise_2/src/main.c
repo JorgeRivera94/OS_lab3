@@ -7,11 +7,6 @@
 
 #include "tangents.h"
 
-extern double input;
-extern pthread_mutex_t mutex;
-extern void* Receive(void* input);
-extern void* Calculate(void* input);
-
 extern double arr[1000000];
 extern double sum;
 extern void* CalculateSum(void* sub_array);
