@@ -5,15 +5,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// void* Receive(void* input);
-// void* Calculate(void* input);
-
-// extern double input;
-// extern pthread_mutex_t mutex;
-// extern pthread_cond_t cond_wait_receive;
-// extern pthread_cond_t cond_wait_calculate;
-
 extern double arr[1000000];
+extern double sum;
 void FillArray(double arr[1000000]);  // IN RADIANS
+void* CalculateSum(void* sub_array);
+void CreateSubArrays(double* sub_array, int starting_index);
+void SumAll(double* sum, double* partial_sum);
 
 #endif  // TANGENTS_H
