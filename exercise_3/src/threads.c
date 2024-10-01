@@ -1,4 +1,4 @@
-#include "threads.h"
+#include "square_root.h"
 
 #include <math.h>
 #include <pthread.h>
@@ -8,98 +8,87 @@
 #include <unistd.h>
 
 /**
- * @brief Global value to store the user provided number.
+ * @brief Array that holds 1,000,000 elements of type double. The elements are
+ * the tangents of the numbers [1, 1000000].
  */
-double input;
+double arr[1000000];
 
 /**
- * @brief Mutex to control access to input variable by threads receiver and
- * calculator.
+ * @brief Variable of type double to hold the sum of all elements in an array
+ * containing the tangents of all numbers in the range [1, 1000000].
  */
-pthread_mutex_t mutex;
+double sum = 0.0;
 
 /**
- * @brief Conditional variable for the thread receiving the input to wait until
- * the calculator thread finishes calculating the arcsine and printng the value.
- */
-pthread_cond_t cond_wait_receive;
-
-/**
- * @brief Conditional variable for the thread calculating the arcsine to wait
- * until the receiver thread receives a new value before starting the
- * calculation and printing the result.
- */
-pthread_cond_t cond_wait_calculate;
-
-/**
- * @brief Asks the user to input a number between 0 and 1.
+ * @brief Takes an array of type double and fills it with the tangents of all
+ * numbers in the range [1, 1000000].
  *
- * Receives a number from the user and updates a global double type variable. Is
- * operated by the receiver thread and syncronized with the thread running
- * Calculate() by a shared mutex and conditional wait variables. If the user
- * input is greater than 100, it wakes up the calculator thread, unlucks the
- * mutex, and terminates the receiver thread.
- * @param input Void pointer as a thread operates the function. Is type casted
- * into a double type pointer referencing a global double variable.
- * @return void* Void pointer return as a thread operates the function.
+ * @param arr Array of type double and size of 1,000,000.
  */
-void *Receive(void *input) {
-  double *n = (double *)input;
-
-  while (1) {
-    // ask the user for a floating point number
-    pthread_mutex_lock(&mutex);  // enter and lock
-
-    printf("Enter a number between 0 and 1: ");
-    scanf("%lf", &*n);
-
-    if (*n > 100) {
-      printf("Number greater than 100 entered. Exiting.\n");
-      pthread_cond_signal(&cond_wait_calculate);
-      pthread_mutex_unlock(&mutex);
-      void *status;
-      pthread_exit(status);
-    }
-
-    pthread_cond_signal(&cond_wait_calculate);
-    pthread_cond_wait(&cond_wait_receive, &mutex);
-    pthread_mutex_unlock(&mutex);  // leave and unlock
+void FillArray(double arr[1000000]) {
+  for (int i = 1; i < 1000001; i++) {
+    arr[i] = tan((double)i);
   }
 }
 
 /**
- * @brief Reads the value of a global double type variable representing the user
- * input. If the value is between 0 and 1, calculates the input's arcsine and
- * displays the result.
+ * @brief Creates a sub array of size 200,000 and type double of the array
+ * containing 1,000,000 double elements.
  *
- * Is operated by the calculator thread and syncronized with the thread running
- * Receive() by a shared mutex and conditional wait variables. If the user
- * input is greater than 100, it wakes up the receiver thread, unlucks the
- * mutex, and terminates the receiver thread.
- * @param input Void pointer to be type casted into a double type pointer.
- * Represents the user input obtained by Receive().
- * @return void* Void pointer as a thread operates the function.
+ * @param sub_array Array of of type double and size 200,000 to be filled with a
+ * sub array of type double.
+ * @param starting_index Integer starting index on the original array of whom
+ * the sub array of 200,000 elements is being created.
  */
-void *Calculate(void *input) {
-  double *n = (double *)input;
-
-  while (1) {
-    pthread_mutex_lock(&mutex);
-
-    if (*n >= 0 && *n <= 1) {
-      // calculate the arcsine
-      double arcsine = asin(*n);
-      // show it on screen
-      printf("The arcsine of %lf is %lf.\n", *n, arcsine);
-    } else if (*n > 100) {
-      pthread_cond_signal(&cond_wait_receive);
-      pthread_mutex_unlock(&mutex);
-      void *status;
-      pthread_exit(status);
-    }
-
-    pthread_cond_signal(&cond_wait_receive);
-    pthread_cond_wait(&cond_wait_calculate, &mutex);
-    pthread_mutex_unlock(&mutex);
+void CreateSubArrays(double *sub_array, int starting_index) {
+  for (int i = 0; i < 200000; i++) {
+    sub_array[i] = arr[i + starting_index];
   }
+}
+
+/**
+ * @brief Checks if the file "data.txt" exists. If it does not exist, creates
+ * the file and writes 10,000 pseudo-random unsigned integer numbers on it.
+ *
+ * This function is operated by a thread.
+ * @param param Unused void pointer.
+ * @return void* Void pointer to the address that will the store 0 if the file
+ * did not exist, or 1 if the file existed.
+ */
+void *CheckExists(void *param) {
+  int *ans;
+  // check if the file exists
+  FILE *addr_file;
+  addr_file = fopen("data.txt", "r");
+  // if the file existed
+  if (addr_file != NULL) {
+    // fclose(addr_file);
+    *ans = 1;
+    return (void *)ans;
+  } else {
+    // if the file did not exist
+    addr_file = fopen("data.txt", "w");
+    // range of 8bit unsigned int is [0, 255]
+    srand(time(NULL));
+    for (int i = 0; i < 10000; i++) {
+      unsigned int data = rand() % 256;
+      fprintf(addr_file, "%d\n", data);
+    }
+    fclose(addr_file);
+    *ans = 0;
+    return (void *)ans;
+  }
+}
+
+/**
+ * @brief Updates the total sum with the given partial sum.
+ *
+ * @param sum Double type pointer to variable holding the sum of all elements in
+ * the 1,000,000 element array.
+ * @param partial_sum Double type pointer to the sum of the elements of a
+ * certain sub array of 200,000 elements.
+ */
+void SumAll(double *sum, double *partial_sum) {
+  // add the partial sums
+  *sum += *partial_sum;
 }
