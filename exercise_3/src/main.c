@@ -4,32 +4,33 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "threads.h"
+#include "square_root.h"
 
-extern double input;
-extern pthread_mutex_t mutex;
-extern void* Receive(void* input);
-extern void* Calculate(void* input);
+// extern pthread_mutex_t mutex;
+extern void* CheckExists(void* param);
 
 int main() {
-  // declare threads
-  pthread_t receiver;    // to ask the user input
-  pthread_t calculator;  // to calculate the arcsines
+  // declare first thread
+  pthread_t check_exists;  // to check if data.txt exists
 
-  // initialize mutex
-  if (pthread_mutex_init(&mutex, NULL) != EXIT_SUCCESS) {
-    perror("Failed to initialize mutex.");
-    exit(EXIT_FAILURE);
-  }
+  //   // initialize mutex
+  //   if (pthread_mutex_init(&mutex, NULL) != EXIT_SUCCESS) {
+  //     perror("Failed to initialize mutex.");
+  //     exit(EXIT_FAILURE);
+  //   }
 
   // create the threads
-  pthread_create(&receiver, NULL, Receive, (void*)&input);
-  pthread_create(&calculator, NULL, Calculate, (void*)&input);
+  pthread_create(&check_exists, NULL, CheckExists, NULL);
 
-  pthread_join(receiver, NULL);
-  pthread_join(calculator, NULL);
+  // return value for check_exists
+  int* data_existed;  // 0 or 1
 
-  pthread_mutex_destroy(&mutex);
+  pthread_join(check_exists, (void**)&data_existed);
+
+  // pthread_mutex_destroy(&mutex);
+
+  // tests
+  printf("%d\n", *data_existed);
 
   return 0;
 }
