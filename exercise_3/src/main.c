@@ -6,20 +6,15 @@
 
 #include "square_root.h"
 
-// extern pthread_mutex_t mutex;
 extern void* CheckExists(void* param);
+extern void* Read(void* param);
 
 int main() {
-  // declare first thread
+  // declare threads
   pthread_t check_exists;  // to check if data.txt exists
+  pthread_t reader;        // to store the values of data.txt in an array
 
-  //   // initialize mutex
-  //   if (pthread_mutex_init(&mutex, NULL) != EXIT_SUCCESS) {
-  //     perror("Failed to initialize mutex.");
-  //     exit(EXIT_FAILURE);
-  //   }
-
-  // create the threads
+  // create initial thread
   pthread_create(&check_exists, NULL, CheckExists, NULL);
 
   // return value for check_exists
@@ -27,10 +22,11 @@ int main() {
 
   pthread_join(check_exists, (void**)&data_existed);
 
-  // pthread_mutex_destroy(&mutex);
+  // second thread
+  pthread_create(&reader, NULL, Read, NULL);
 
-  // tests
-  printf("%d\n", *data_existed);
+  // wait for the second thread to end
+  pthread_join(reader, NULL);
 
   return 0;
 }
